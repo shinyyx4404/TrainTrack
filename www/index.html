@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070d0c">
+<title>TrainTrack</title>
+<style>
+:root{--bg:#070d0c;--card:#0e1816;--card2:#13211e;--line:#1d3530;--g:#2ee88a;--gd:#0a2b1d;--tx:#e8f5ef;--mut:#7f9a91;--bad:#ff6b6b;--on:#04140d}
+:root[data-t=light]{--bg:#eef6f2;--card:#fff;--card2:#e6f1ec;--line:#cfe2d9;--g:#12b86b;--gd:#d8f3e5;--tx:#10231c;--mut:#5d7a6e;--on:#fff}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--tx);font:15px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+#app{max-width:480px;height:100%;margin:0 auto;position:relative;display:flex;flex-direction:column;background:radial-gradient(120% 60% at 50% 0,var(--gd),transparent 60%),var(--bg);overflow:hidden}
+@media(min-width:520px){#app{height:min(900px,96%);margin-top:2vh;border:1px solid var(--line);border-radius:28px}}
+main{flex:1;overflow-y:auto;padding:calc(env(safe-area-inset-top) + 18px) 16px 16px}
+nav{display:flex;border-top:1px solid var(--line);background:var(--card);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;padding:9px 0 8px;font-size:11px;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button i{font-style:normal;font-size:20px;filter:grayscale(1) opacity(.7)}
+nav button.on{color:var(--g)}nav button.on i{filter:none;text-shadow:0 0 12px var(--g)}
+h1{font-size:22px}h2{font-size:30px;line-height:1.1;font-weight:800}h2 em{font-style:normal;color:var(--g);text-shadow:0 0 18px var(--g)}
+h3{font-size:17px;margin-bottom:6px}
+.m{color:var(--mut);font-size:13px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:16px;min-height:36px}
+.top .bk{font-size:26px;color:var(--tx);padding:0 6px}
+.logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px;flex:1}
+.logo b{width:26px;height:26px;border-radius:7px;background:var(--g);color:var(--on);display:grid;place-items:center;font-size:15px;box-shadow:0 0 14px var(--g)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.row{display:flex;align-items:center;gap:12px}.row>div{flex:1}.row b{display:block}
+.ic{width:42px;height:42px;border-radius:12px;background:var(--gd);display:grid;place-items:center;font-size:20px;flex:none}
+.b{display:block;width:100%;padding:14px;border-radius:14px;background:var(--g);color:var(--on);font-weight:700;text-align:center;margin-top:10px;box-shadow:0 0 18px color-mix(in srgb,var(--g) 35%,transparent)}
+.b.ol{background:none;color:var(--tx);border:1px solid var(--line);box-shadow:none}
+.b.dg{background:none;color:var(--bad);border:1px solid var(--bad);box-shadow:none}
+.tag{font-size:11px;padding:3px 9px;border-radius:9px;background:var(--gd);color:var(--g);border:1px solid var(--g)}
+.hero{padding:6px 0 4px}.hero p{margin:10px 0 16px;max-width:260px}
+.big{font-size:24px;font-weight:800}
+.chev{color:var(--mut);font-size:20px}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.mh b{font-size:17px}.mh button{font-size:24px;padding:2px 12px;color:var(--g)}
+.g7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.g7 .h{font-size:11px;color:var(--mut);padding:4px 0}
+.d{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:13px;position:relative}
+.d.x{visibility:hidden}.d.f{color:var(--mut)}
+.d.w{background:var(--g);color:var(--on);font-weight:700;box-shadow:0 0 12px color-mix(in srgb,var(--g) 60%,transparent)}
+.d.o{background:var(--card2);border:1px solid var(--g)}
+.d.t{outline:2px solid var(--g);outline-offset:1px}
+.d.mi:not(.w):not(.o):not(.f):not(.t){color:var(--bad)}
+.lg{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0 4px;font-size:12px;color:var(--mut)}
+.lg i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;padding:9px;border-radius:10px;color:var(--mut)}.seg .on{background:var(--g);color:var(--on);font-weight:700}
+.kp{display:flex;gap:10px}.kp>div{flex:1}.kp .big{margin-top:4px}
+.bars{display:flex;align-items:flex-end;gap:3px;height:130px;margin-top:14px}
+.bars div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:10px;color:var(--mut);gap:4px}
+.bars span{width:100%;max-width:26px;background:var(--g);border-radius:5px 5px 2px 2px;min-height:3px;box-shadow:0 0 10px color-mix(in srgb,var(--g) 40%,transparent)}
+.bars .z span{background:var(--line);box-shadow:none}
+.pr{display:flex;gap:6px;margin:14px 0}.pr i{flex:1;height:10px;border-radius:6px;background:var(--line)}.pr i.on{background:var(--g);box-shadow:0 0 10px var(--g)}
+.chip{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.chip button{padding:15px;border-radius:13px;background:var(--card);border:1px solid var(--line);font-weight:600}
+.chip .on{background:var(--g);color:var(--on)}
+input[type=number],input[type=text],input[type=date]{width:100%;padding:13px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--tx);font:inherit;color-scheme:dark}
+:root[data-t=light] input{color-scheme:light}
+.tg{width:48px;height:28px;border-radius:15px;background:var(--line);position:relative;flex:none;transition:.2s}
+.tg:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.tg.on{background:var(--g)}.tg.on:after{left:23px}
+.rad{width:22px;height:22px;border-radius:50%;border:2px solid var(--mut);flex:none}.sel{border-color:var(--g)!important}.sel .rad{border-color:var(--g);background:radial-gradient(var(--g) 45%,transparent 50%)}
+.opt{width:100%;text-align:left;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.opt div{flex:1}.opt b{display:block}
+.list>.row{padding:13px 4px;border-bottom:1px solid var(--line);width:100%;text-align:left}.list>.row:last-child{border:0}
+#sh{position:absolute;inset:0;display:none;align-items:flex-end;z-index:9}#sh.on{display:flex}
+.bd{position:absolute;inset:0;background:#000a}
+.sheet{position:relative;width:100%;background:var(--card);border-top:1px solid var(--g);border-radius:24px 24px 0 0;padding:20px 18px calc(env(safe-area-inset-bottom) + 18px);max-height:90%;overflow:auto;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+#toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:var(--g);color:var(--on);padding:10px 18px;border-radius:20px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:20;white-space:nowrap}#toast.on{opacity:1}
+ul.ru{padding-left:18px;color:var(--mut);font-size:13px}ul.ru li{margin:7px 0}
+.av{width:60px;height:60px;border-radius:50%;background:var(--gd);border:2px solid var(--g);display:grid;place-items:center;font-size:26px;font-weight:800;color:var(--g)}
+.lock{filter:grayscale(1);opacity:.45}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"><main id="v"></main><nav id="nv"></nav><div id="sh"></div><div id="toast"></div></div>
+<script>
+const K='traintrack_v1';
+const DEF={w:{},o:{},name:'Атлет',goal:'loss',theme:'dark',n:{t:true,o:true,m:true,r:false}};
+let S=load();
+function load(){try{const d=JSON.parse(localStorage.getItem(K));if(d&&d.w&&d.o)return Object.assign({},DEF,d,{n:Object.assign({},DEF.n,d.n)})}catch(e){}return JSON.parse(JSON.stringify(DEF))}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){toast('Не удалось сохранить данные')}}
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse=k=>{const a=k.split('-');return new Date(+a[0],a[1]-1,+a[2])};
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const TK=()=>key(new Date());
+const MN=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const MG=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const WD=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+const fmt=k=>{const d=parse(k);return d.getDate()+' '+MG[d.getMonth()]+' ('+WD[d.getDay()]+')'};
+const fmtY=k=>{const d=parse(k);return d.getDate()+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear()};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const plural=(n,a)=>{const m=n%100,l=n%10;return a[m>10&&m<20?2:l==1?0:l>1&&l<5?1:2]};
+const days=n=>n+' '+plural(n,['день','дня','дней']);
+const hm=m=>m>=60?Math.floor(m/60)+' ч '+(m%60?m%60+' мин':''):m+' мин';
+
+/* ---- серия ---- */
+function runs(){
+  const t=TK(),ks=[...new Set([...Object.keys(S.w),...Object.keys(S.o)])].filter(k=>k<=t).sort(),r=[];
+  ks.forEach(k=>{const l=r[r.length-1];if(l&&key(addD(parse(l.end),1))===k){l.end=k;}else r.push({start:k,end:k,w:0});
+    if(S.w[k])r[r.length-1].w++;});
+  return r;
+}
+function streak(){
+  const R=runs(),t=TK(),y=key(addD(new Date(),-1));
+  const c=R.find(r=>r.end===t||r.end===y),best=R.filter(r=>r.w>=3).sort((a,b)=>b.w-a.w)[0];
+  return{cur:c&&c.w>=3?c.w:0,prog:c?Math.min(c.w,3):0,run:c?c.w:0,best:best?best.w:0,bs:best&&best.start,be:best&&best.end};
+}
+const total=()=>Object.values(S.w).reduce((a,b)=>a+b,0);
+const level=()=>{const n=Object.keys(S.w).length;return n<10?'Новичок':n<30?'Любитель':n<100?'Опытный':'Профи'};
+
+/* ---- интерфейс ---- */
+let page='home',cal=(()=>{const d=new Date();return{y:d.getFullYear(),m:d.getMonth()}})(),st='w';
+const NAV=[['home','🏠','Главная'],['cal','📅','Календарь'],['stats','📊','Статистика'],['prof','👤','Профиль']];
+function go(p){page=p;render();$('#v').scrollTop=0}
+function render(){
+  document.documentElement.dataset.t=S.theme;
+  const tab=['home','cal','stats','prof'].includes(page)?page:{goals:'prof',notif:'prof',theme:'prof',help:'prof',about:'prof',ach:'prof',streak:'home'}[page];
+  $('#nv').innerHTML=NAV.map(n=>`<button class="${n[0]==tab?'on':''}" onclick="go('${n[0]}')"><i>${n[1]}</i>${n[2]}</button>`).join('');
+  $('#v').innerHTML=(P[page]||P.home)();
+}
+const back=(t,to)=>`<div class="top"><button class="bk" onclick="go('${to}')">‹</button><h1>${t}</h1></div>`;
+const P={};
+
+P.home=()=>{
+  const s=streak(),t=TK(),mins=S.w[t]||0,off=S.o[t];
+  const to=g=>S.w[t]?'Тренировка сегодня: '+mins+' мин':off?'Сегодня отгул':'Нет тренировки';
+  return `<div class="top"><div class="logo"><b>⚡</b>TrainTrack</div><button class="bk" onclick="go('prof')">⚙</button></div>
+  <div class="hero"><h2><em>Лучше,</em><br>чем вчера</h2><p class="m">Твоя дисциплина сегодня — твой результат завтра.</p>
+  <button class="b" onclick="addW('${t}')">＋ ${S.w[t]?'Изменить тренировку':'Отметить тренировку'}</button></div>
+  <button class="card row" style="width:100%;text-align:left;margin-top:14px" onclick="go('streak')"><div class="ic">🔥</div>
+  <div><span class="m">Текущая серия</span><span class="big" style="display:block">${s.cur?days(s.cur):s.prog?s.prog+' из 3':'Не начата'}</span>
+  <span class="m">${s.cur?'До рекорда: '+days(Math.max(s.best-s.cur,0)):'Серия активируется после 3 тренировочных дней подряд'}</span></div>
+  ${s.cur?'<span class="tag">Отлично!</span>':''}</button>
+  <div class="card row"><div class="ic">⏱</div><div><span class="m">Сегодня</span><b class="big">${mins} мин</b></div><span class="m">${to()}</span></div>
+  ${off?`<div class="card row"><div class="ic">☕</div><div><b>Сегодня отгул</b><span class="m">Серия сохраняется</span></div></div>`:''}`;
+};
+
+P.streak=()=>{
+  const s=streak();
+  return back('Серия тренировок','home')+`<div style="text-align:center"><div class="ic" style="margin:0 auto;width:64px;height:64px;font-size:32px;border-radius:50%;border:2px solid var(--g)">🔥</div>
+  <div class="big" style="font-size:34px;margin-top:8px">${s.cur?days(s.cur):s.prog+' из 3'}</div><div class="m">${s.cur?'Текущая серия':'Тренировок до старта серии'}</div></div>
+  <div class="pr">${[1,2,3].map(i=>`<i class="${s.prog>=i?'on':''}"></i>`).join('')}</div>
+  <p class="m" style="text-align:center">${s.best?'До рекорда: '+days(Math.max(s.best-s.cur,0)):'Рекорда пока нет'}</p>
+  <div class="card" style="margin-top:14px"><h3>Правила серии</h3><ul class="ru"><li>Серия начинается после 3 последовательных тренировочных дней.</li><li>Отгул на конкретную дату сохраняет серию, но не увеличивает её.</li><li>Если пропустить день без отгула — серия прервётся.</li></ul></div>
+  <div class="card row"><div class="ic">🏆</div><div><span class="m">Лучший результат</span><b class="big">${s.best?days(s.best):'—'}</b><span class="m">${s.best?fmtY(s.bs)+' – '+fmtY(s.be):'Появится после первой серии'}</span></div></div>`;
+};
+
+P.cal=()=>{
+  const {y,m}=cal,t=TK(),first=new Date(y,m,1),off=(first.getDay()+6)%7,n=new Date(y,m+1,0).getDate();
+  let g=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(d=>`<div class="h">${d}</div>`).join('')+'<div class="d x"></div>'.repeat(off);
+  for(let i=1;i<=n;i++){const k=y+'-'+pad(m+1)+'-'+pad(i),c=['d'];
+    if(S.w[k])c.push('w');else if(S.o[k])c.push('o');else if(k<t)c.push('mi');
+    if(k==t)c.push('t');if(k>t)c.push('f');
+    g+=`<button class="${c.join(' ')}" onclick="openDay('${k}')">${S.o[k]&&!S.w[k]?'☕':i}</button>`;}
+  const offs=Object.keys(S.o).filter(k=>k>=t).sort()[0];
+  return `<div class="top"><h1>Календарь</h1></div><div class="card"><div class="mh"><button onclick="mv(-1)">‹</button><b>${MN[m]} ${y}</b><button onclick="mv(1)">›</button></div><div class="g7">${g}</div>
+  <div class="lg"><span><i style="background:var(--g)"></i>Тренировка</span><span><i style="border:1px solid var(--g)"></i>Отгул ☕</span><span><i style="border:2px solid var(--g)"></i>Сегодня</span><span style="color:var(--bad)"><i style="background:var(--bad)"></i>Пропуск</span></div></div>
+  <button class="card row" style="width:100%;text-align:left" onclick="openDay('${offs||t}')"><div class="ic">${offs?'☕':'📅'}</div><div><span class="m">${offs?'Ближайший отгул: '+fmt(offs):'Отгулов не запланировано'}</span><b>${offs?'Отгул':'Выберите дату'}</b>${offs?'<span class="m">Серия сохранится</span>':''}</div><span class="chev">›</span></button>
+  <button class="b" onclick="pickDate()">Выбрать дату</button>`;
+};
+function mv(d){cal.m+=d;if(cal.m<0){cal.m=11;cal.y--}if(cal.m>11){cal.m=0;cal.y++}render()}
+function pickDate(){sheet(`<h3>Выберите дату</h3><input type="date" id="pd" value="${TK()}"><button class="b" onclick="openDay($('#pd').value||TK())">Открыть</button><button class="b ol" onclick="closeSh()">Отмена</button>`)}
+
+P.stats=()=>{
+  const now=new Date(),t=TK();let ks=[],bars=[];
+  if(st=='w'){const mon=addD(now,-((now.getDay()+6)%7));for(let i=0;i<7;i++){const k=key(addD(mon,i));ks.push(k);bars.push([WD[(i+1)%7],S.w[k]||0])}}
+  else if(st=='m'){const n=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();for(let i=1;i<=n;i++){const k=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(i);ks.push(k);bars.push([i%5==0||i==1?i:'',S.w[k]||0])}}
+  else{ks=Object.keys(S.w);for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1),p=d.getFullYear()+'-'+pad(d.getMonth()+1);bars.push([MN[d.getMonth()].slice(0,3),Object.keys(S.w).filter(k=>k.startsWith(p)).reduce((a,k)=>a+S.w[k],0)])}}
+  const wk=ks.filter(k=>S.w[k]),mins=wk.reduce((a,k)=>a+S.w[k],0),offs=(st=='a'?Object.keys(S.o):ks.filter(k=>S.o[k])).length,mx=Math.max(1,...bars.map(b=>b[1])),s=streak();
+  const all=Object.keys(S.w),avg=all.length?Math.round(total()/all.length):0;
+  return `<div class="top"><h1>Статистика</h1></div><div class="seg">${[['w','Неделя'],['m','Месяц'],['a','Все время']].map(x=>`<button class="${st==x[0]?'on':''}" onclick="st='${x[0]}';render()">${x[1]}</button>`).join('')}</div>
+  <div class="card"><div class="kp"><div><span class="m">Всего тренировок</span><div class="big">${wk.length}</div></div><div><span class="m">Общее время</span><div class="big">${mins} мин</div></div></div>
+  <div class="bars">${bars.map(b=>`<div class="${b[1]?'':'z'}"><span style="height:${Math.round(b[1]/mx*100)}%" title="${b[1]} мин"></span>${b[0]}</div>`).join('')}</div></div>
+  <div class="card list"><div class="row"><div class="ic">🔥</div><div><span class="m">Серия</span><b>${s.cur?days(s.cur):'Не начата'}</b></div></div>
+  <div class="row"><div class="ic">⏱</div><div><span class="m">Средняя длительность</span><b>${avg} мин</b></div></div>
+  <div class="row"><div class="ic">☕</div><div><span class="m">Отгулы</span><b>${days(offs)}</b></div></div>
+  <div class="row"><div class="ic">🏆</div><div><span class="m">Лучшая серия</span><b>${s.best?days(s.best):'—'}</b></div></div></div>`;
+};
+
+const GL={loss:['Похудение','Сжигание калорий, улучшение выносливости','🏃'],end:['Выносливость','Больше энергии и сил','⚡'],str:['Сила','Рост мышц и прогресс','🏋']};
+P.prof=()=>`<div class="top"><h1>Профиль</h1></div>
+  <button class="card row" style="width:100%;text-align:left" onclick="editName()"><div class="av">${esc(S.name[0]||'A').toUpperCase()}</div><div><b class="big" style="font-size:20px">${esc(S.name)}</b><span class="m">Уровень: ${level()}</span></div><span class="chev">›</span></button>
+  <div class="card list">${[['goals','🎯','Цели',GL[S.goal][0]],['notif','🔔','Уведомления','Напоминания о тренировках'],['theme','🌓','Тема',S.theme=='dark'?'Тёмная':'Светлая'],['ach','🏅','Достижения',achs().filter(a=>a[3]).length+' из '+achs().length]].map(r=>`<button class="row" onclick="go('${r[0]}')"><div class="ic">${r[1]}</div><div><b>${r[2]}</b><span class="m">${r[3]}</span></div><span class="chev">›</span></button>`).join('')}</div>
+  <div class="card list"><button class="row" onclick="go('help')"><div class="ic">❓</div><div><b>Помощь</b><span class="m">FAQ и поддержка</span></div><span class="chev">›</span></button>
+  <button class="row" onclick="go('about')"><div class="ic">ℹ️</div><div><b>О приложении</b><span class="m">Версия 1.0.0</span></div><span class="chev">›</span></button></div>
+  <button class="b dg" onclick="askReset()">Удалить все данные</button>`;
+
+P.goals=()=>back('Цели','prof')+`<p class="m" style="margin-bottom:12px">Выберите цель</p>`+Object.keys(GL).map(k=>`<button class="opt ${S.goal==k?'sel':''}" onclick="S.goal='${k}';save();render()"><div class="ic">${GL[k][2]}</div><div><b>${GL[k][0]}</b><span class="m">${GL[k][1]}</span></div><i class="rad"></i></button>`).join('')+`<button class="b" onclick="toast('Цель сохранена');go('prof')">Сохранить</button>`;
+const NL={t:'Напоминания о тренировках',o:'Напоминания об отгулах',m:'Мотивационные сообщения',r:'Еженедельный отчёт'};
+P.notif=()=>back('Уведомления','prof')+`<div class="card list">${Object.keys(NL).map(k=>`<button class="row" onclick="S.n['${k}']=!S.n['${k}'];save();render()"><div><b>${NL[k]}</b></div><i class="tg ${S.n[k]?'on':''}"></i></button>`).join('')}</div>`;
+P.theme=()=>back('Тема','prof')+[['light','☀️','Светлая'],['dark','🌙','Тёмная']].map(x=>`<button class="opt ${S.theme==x[0]?'sel':''}" onclick="S.theme='${x[0]}';save();render()"><div class="ic">${x[1]}</div><div><b>${x[2]}</b></div><i class="rad"></i></button>`).join('');
+P.help=()=>back('Помощь','prof')+[['Как начать серию?','Отметьте тренировки 3 дня подряд — серия активируется.'],['Как назначить отгул?','Откройте Календарь, нажмите на нужную дату и выберите «Запланировать отгул». Для каждой даты — отдельно.'],['Что делает отгул?','Сохраняет текущую серию, но не увеличивает её.'],['Когда серия прервётся?','Если прошедший день остался без тренировки и без отгула.'],['Где хранятся данные?','Только на этом устройстве.']].map(x=>`<div class="card"><b>${x[0]}</b><p class="m" style="margin-top:4px">${x[1]}</p></div>`).join('');
+P.about=()=>back('О приложении','prof')+`<div class="card" style="text-align:center"><div class="logo" style="justify-content:center"><b>⚡</b>TrainTrack</div><p class="m" style="margin-top:8px">Версия 1.0.0<br>Трекер тренировок и серий. Все данные хранятся на вашем устройстве.</p></div>`;
+function achs(){const s=streak(),min=total();return[['🌟','Первые 3 дня','Серия 3 дня',s.best>=3],['⭐','Неделя силы','Серия 7 дней',s.best>=7],['⏱','10 часов','600 минут',min>=600],['🛡','Железная дисциплина','Серия 14 дней',s.best>=14]]}
+P.ach=()=>back('Достижения','prof')+`<div class="card list">${achs().map(a=>`<div class="row ${a[3]?'':'lock'}"><div class="ic">${a[0]}</div><div><b>${a[1]}</b><span class="m">${a[2]}</span></div><span>${a[3]?'✓':'🔒'}</span></div>`).join('')}</div>`;
+
+/* ---- окна ---- */
+function sheet(h){$('#sh').innerHTML='<div class="bd" onclick="closeSh()"></div><div class="sheet">'+h+'</div>';$('#sh').classList.add('on')}
+function closeSh(){$('#sh').classList.remove('on')}
+let tt;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),1800)}
+function openDay(k){
+  if(!/^\d{4}-\d\d-\d\d$/.test(k))return;
+  const t=TK(),w=S.w[k],o=S.o[k];let h=`<h3>${fmt(k)}</h3>`;
+  if(w)h+=`<p class="m">Тренировка: ${w} мин</p><button class="b" onclick="addW('${k}')">Редактировать</button><button class="b dg" onclick="delW('${k}')">Удалить тренировку</button>`;
+  else{
+    if(o)h+=`<div class="card row" style="margin-top:8px"><div class="ic">☕</div><div><b>Отгул</b><span class="m">Серия сохранится, но не увеличится</span></div></div><button class="b ol" onclick="askCancel('${k}')">Отменить отгул</button><button class="b ol" onclick="moveOff('${k}')">Изменить дату</button>`;
+    else if(k<t)h+=`<p class="m">Прошедший день без тренировки прерывает серию.</p>`;
+    if(k<=t)h+=`<button class="b" onclick="addW('${k}')">＋ Добавить тренировку</button>`;
+    if(k>=t&&!o)h+=`<button class="b ol" onclick="setOff('${k}')">Запланировать отгул</button>`;
+  }
+  sheet(h+`<button class="b ol" onclick="closeSh()">Закрыть</button>`);
+}
+let dur=30;
+function addW(k){
+  if(k>TK()){toast('Нельзя отмечать будущие дни');return}
+  dur=S.w[k]||30;const pre=[15,30,45,60].includes(dur);
+  sheet(`<h3>${S.w[k]?'Редактировать':'Добавить'} тренировку</h3><p class="m">${fmt(k)}</p><p style="margin-top:10px">Выберите длительность</p>
+  <div class="chip" id="ch">${[15,30,45,60].map(n=>`<button class="${dur==n?'on':''}" onclick="setDur(${n})">${n} мин</button>`).join('')}</div>
+  <input type="number" id="cd" min="1" max="600" placeholder="Своя длительность (мин)" value="${pre?'':dur}" oninput="dur=+this.value;document.querySelectorAll('#ch .on').forEach(e=>e.classList.remove('on'))">
+  <button class="b" onclick="saveW('${k}')">Сохранить</button><button class="b ol" onclick="closeSh()">Отмена</button>`);
+}
+function setDur(n){dur=n;$('#cd').value='';document.querySelectorAll('#ch button').forEach(b=>b.classList.toggle('on',b.textContent==n+' мин'))}
+function saveW(k){
+  if(!(dur>=1&&dur<=600)){toast('Укажите от 1 до 600 минут');return}
+  S.w[k]=Math.round(dur);delete S.o[k];save();closeSh();render();toast('Тренировка сохранена');
+}
+function delW(k){delete S.w[k];save();closeSh();render();toast('Тренировка удалена')}
+function setOff(k){if(S.w[k]){toast('В этот день уже есть тренировка');return}S.o[k]=true;save();closeSh();render();toast('Отгул назначен на '+fmt(k))}
+function askCancel(k){sheet(`<h3>Отменить отгул?</h3><p class="m">Отгул на ${fmt(k)} будет удалён. Если день останется без тренировки, серия прервётся.</p><button class="b" onclick="cancelOff('${k}')">Отменить отгул</button><button class="b ol" onclick="closeSh()">Назад</button>`)}
+function cancelOff(k){delete S.o[k];save();closeSh();render();toast('Отгул отменён')}
+function moveOff(k){sheet(`<h3>Изменить дату отгула</h3><p class="m">Сейчас: ${fmt(k)}</p><input type="date" id="md" min="${TK()}" value="${k}" style="margin-top:10px"><button class="b" onclick="doMove('${k}')">Перенести</button><button class="b ol" onclick="closeSh()">Отмена</button>`)}
+function doMove(k){const n=$('#md').value;if(!n||n<TK()){toast('Выберите сегодняшнюю или будущую дату');return}if(S.w[n]){toast('В этот день уже есть тренировка');return}delete S.o[k];S.o[n]=true;save();closeSh();render();toast('Отгул перенесён')}
+function editName(){sheet(`<h3>Ваше имя</h3><input type="text" id="nm" maxlength="24" value="${esc(S.name)}"><button class="b" onclick="S.name=$('#nm').value.trim()||'Атлет';save();closeSh();render()">Сохранить</button><button class="b ol" onclick="closeSh()">Отмена</button>`)}
+function askReset(){sheet(`<h3>Удалить все данные?</h3><p class="m">Тренировки, отгулы и настройки будут удалены без возможности восстановления.</p><button class="b dg" onclick="localStorage.removeItem(K);S=load();closeSh();go('home');toast('Данные удалены')">Удалить</button><button class="b ol" onclick="closeSh()">Отмена</button>`)}
+render();
+</script>
+</body>
+</html>
