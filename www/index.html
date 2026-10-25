@@ -74,11 +74,53 @@ input[type=number],input[type=text],input[type=date],input[type=time]{width:100%
 ul.ru{padding-left:18px;color:var(--mut);font-size:13px}ul.ru li{margin:7px 0}
 .av{width:60px;height:60px;border-radius:50%;background:var(--gd);border:2px solid var(--g);display:grid;place-items:center;font-size:26px;font-weight:800;color:var(--g)}
 .lock{opacity:.45}.i{width:22px;height:22px;display:block}nav .i{width:25px;height:25px}.d .i{width:15px;height:15px;color:var(--g)}.logo .i{width:16px;height:16px}.i.hd{position:absolute;right:-6px;top:-4px;width:150px;height:150px;opacity:.13;transform:rotate(-18deg);stroke-width:1;color:var(--g);pointer-events:none}.row b.big{white-space:nowrap}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes grow{from{transform:scaleY(0)}}
+@keyframes fillx{from{transform:scaleX(0)}}
+@keyframes flick{0%,100%{transform:scale(1) rotate(0);filter:drop-shadow(0 0 3px var(--g))}25%{transform:scale(1.14) rotate(-5deg)}50%{transform:scale(.96) rotate(4deg);filter:drop-shadow(0 0 11px var(--g))}75%{transform:scale(1.08) rotate(-2deg)}}
+@keyframes ring{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--g) 55%,transparent)}60%{box-shadow:0 0 0 8px transparent}}
+@keyframes bob{0%{transform:none}40%{transform:translateY(-6px) scale(1.18)}100%{transform:none}}
+@keyframes float{0%,100%{transform:rotate(-18deg) translateY(0)}50%{transform:rotate(-14deg) translateY(-9px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 transparent}50%{box-shadow:0 0 16px color-mix(in srgb,var(--g) 60%,transparent)}}
+@keyframes ripple{from{transform:scale(.4);opacity:.8}to{transform:scale(2.4);opacity:0}}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(var(--r))}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes shine{from{transform:translateX(-150%)}to{transform:translateX(350%)}}
+.pg>*{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.pg>*:nth-child(2){animation-delay:.05s}.pg>*:nth-child(3){animation-delay:.1s}.pg>*:nth-child(4){animation-delay:.15s}.pg>*:nth-child(5){animation-delay:.2s}.pg>*:nth-child(n+6){animation-delay:.25s}
+button{transition:transform .12s}button:active{transform:scale(.96)}
+.b{position:relative;overflow:hidden}
+.b:not(.ol):not(.dg):after{content:"";position:absolute;top:0;bottom:0;width:30%;background:linear-gradient(90deg,transparent,#fff6,transparent);animation:shine 3.6s 1s infinite}
+.bd{animation:fade .2s}
+nav button.on i{animation:bob .45s}
+.fl .i{animation:flick 1.6s ease-in-out infinite;transform-origin:50% 80%}
+.d{animation:pop .35s both}.d.t{animation:pop .35s both,ring 2.2s 1s infinite}
+.bars span{transform-origin:bottom;animation:grow .7s cubic-bezier(.2,.8,.2,1) both}
+.pr i.on{transform-origin:left;animation:fillx .6s both}.pr i.on:nth-child(2){animation-delay:.15s}.pr i.on:nth-child(3){animation-delay:.3s}
+.i.hd{animation:float 7s ease-in-out infinite}
+.logo b{animation:glow 3s infinite}
+.qt{animation:fade .6s}
+.row.un .ic{animation:glow 2.6s infinite}
+#ov{position:absolute;inset:0;z-index:30;display:none;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--g) 22%,#04100b),#020605 80%);text-align:center;padding:30px;overflow:hidden;color:#fff}
+#ov.on{display:flex;animation:fade .3s}
+.cb{position:relative;width:150px;height:150px;display:grid;place-items:center;color:var(--g)}
+.cb .i{width:84px;height:84px;stroke-width:1.5;animation:pop .7s .1s both;filter:drop-shadow(0 0 16px var(--g))}
+.cb s{position:absolute;inset:0;border:2px solid var(--g);border-radius:50%;animation:ripple 1.9s infinite}.cb s:nth-child(2){animation-delay:.6s}.cb s:nth-child(3){animation-delay:1.2s}
+#ov h2{margin-top:18px;animation:rise .6s .3s both;font-size:26px}
+#ov p{color:#cfe8dc;margin-top:8px;animation:rise .6s .45s both;max-width:300px}
+#ov .num{font-size:68px;font-weight:900;line-height:1;color:var(--g);text-shadow:0 0 28px var(--g);animation:pop .7s .2s both;margin-top:6px}
+#ov .b{max-width:260px;margin-top:26px;animation:rise .6s .6s both}
+.cf{position:absolute;top:-24px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;pointer-events:none}
+#ck{position:absolute;inset:0;z-index:25;display:none;place-items:center;pointer-events:none}#ck.on{display:grid}
+#ck div{width:116px;height:116px;border-radius:50%;background:var(--g);display:grid;place-items:center;animation:pop .5s both,fade .3s .9s reverse forwards;box-shadow:0 0 44px var(--g)}
+#ck svg{width:58px;height:58px;stroke:var(--on);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:draw .5s .25s forwards}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div id="app"><main id="v"></main><nav id="nv"></nav><div id="sh"></div><div id="toast"></div></div>
+<div id="app"><main id="v"></main><nav id="nv"></nav><div id="sh"></div><div id="toast"></div><div id="ov"></div><div id="ck"><div><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg></div></div></div>
 <script>
 const K='traintrack_v1';
 const DEF={mt:'09:00',rt:'19:00',w:{},o:{},name:'Атлет',goal:'loss',theme:'dark',n:{t:true,o:true,m:true,r:false}};
@@ -137,7 +179,7 @@ function runs(){
 function streak(){
   const R=runs(),t=TK(),y=key(addD(new Date(),-1));
   const c=R.find(r=>r.end===t||r.end===y),best=R.filter(r=>r.w>=3).sort((a,b)=>b.w-a.w)[0];
-  return{cur:c&&c.w>=3?c.w:0,prog:c?Math.min(c.w,3):0,run:c?c.w:0,best:best?best.w:0,bs:best&&best.start,be:best&&best.end};
+  return{cur:c&&c.w>=3?c.w:0,prog:c?Math.min(c.w,3):0,run:c?c.w:0,rs:c?c.start:'',best:best?best.w:0,bs:best&&best.start,be:best&&best.end};
 }
 const total=()=>Object.values(S.w).reduce((a,b)=>a+b,0);
 const level=()=>{const n=Object.keys(S.w).length;return n<10?'Новичок':n<30?'Любитель':n<100?'Опытный':'Профи'};
@@ -145,7 +187,31 @@ const level=()=>{const n=Object.keys(S.w).length;return n<10?'Новичок':n<
 /* ---- интерфейс ---- */
 let page='home',cal=(()=>{const d=new Date();return{y:d.getFullYear(),m:d.getMonth()}})(),st='w';
 const NAV=[['home','🏠','Главная'],['cal','📅','Календарь'],['stats','📊','Статистика'],['prof','👤','Профиль']];
-function go(p){page=p;render();$('#v').scrollTop=0}
+function go(p){page=p;render();$('#v').scrollTop=0;anim()}
+function anim(){const v=$('#v');v.classList.remove('pg');void v.offsetWidth;v.classList.add('pg');setTimeout(()=>v.classList.remove('pg'),900);
+  document.querySelectorAll('[data-c]').forEach(e=>{const n=+e.dataset.c,x=e.dataset.s||'',t0=performance.now();(function f(t){const q=Math.min(1,(t-t0)/800);e.textContent=Math.round(n*(1-Math.pow(1-q,3)))+x;if(q<1)requestAnimationFrame(f)})(t0)})}
+/* ---- праздничные анимации ---- */
+const MS=[3,7,10,20,30,40,50,60,70,80,90,100,150,200,300,365];
+const MT={3:'3 тренировки подряд. Огонь разгорается, не останавливайся!',7:'Целая неделя без сдачи!',10:'Десять дней дисциплины. Америка всё ближе!',20:'Двадцать дней! Это уже характер.',30:'Месяц огня! Ты делаешь невозможное.'};
+let CQ=[];
+function streakItem(m){return m==3?{icon:'flame',num:3,title:'Серия началась!',sub:MT[3],big:false}:{icon:'flame',num:m,title:'Серия продлена до '+days(m)+'!',sub:MT[m]||'Невероятная стойкость. Так держать!',big:true}}
+function checkCel(){
+  const s=streak(),it=[];S.cel=S.cel||{rs:'',max:0,a:[]};
+  if(s.cur>0){if(S.cel.rs!==s.rs){S.cel.rs=s.rs;S.cel.max=0}
+    const h=MS.filter(m=>m<=s.cur&&m>S.cel.max).pop();if(h){S.cel.max=h;it.push(streakItem(h))}}
+  achs().forEach(a=>{if(a[3]&&!S.cel.a.includes(a[1])){S.cel.a.push(a[1]);it.push({icon:IC[a[0]]||'medal',title:'Достижение получено!',sub:a[1]+': '+a[2],big:true})}});
+  save();return it;
+}
+function celeb(l){CQ.push(...l);if(!$('#ov').classList.contains('on'))nextC()}
+function nextC(){
+  const o=$('#ov'),it=CQ.shift();if(!it){o.classList.remove('on');return}
+  o.innerHTML=`<div class="cb"><s></s><s></s><s></s>${ic(it.icon)}</div>${it.num?`<div class="num">${it.num}</div>`:''}<h2>${it.title}</h2><p>${it.sub}</p><button class="b" onclick="nextC()">${CQ.length?'Дальше':'Круто!'}</button>`;
+  o.classList.add('on');
+  const c=['#2ee88a','#ffffff','#ffd84d','#5ab8ff','#ff7ab0'],n=it.big?100:50;
+  for(let i=0;i<n;i++){const e=document.createElement('i');e.className='cf';e.style.cssText=`left:${Math.random()*100}%;background:${c[i%5]};--dx:${(Math.random()-.5)*180}px;--r:${Math.round(Math.random()*900)}deg;animation-duration:${2+Math.random()*2.2}s;animation-delay:${Math.random()*.9}s`;o.appendChild(e)}
+  try{navigator.vibrate&&navigator.vibrate(it.big?[60,40,60,40,140]:[40,30,60])}catch(e){}
+}
+function okPop(){const c=$('#ck');c.classList.remove('on');void c.offsetWidth;c.classList.add('on');setTimeout(()=>c.classList.remove('on'),1400);try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}}
 function render(){
   document.documentElement.dataset.t=S.theme;
   const tab=['home','cal','stats','prof'].includes(page)?page:{goals:'prof',notif:'prof',theme:'prof',help:'prof',about:'prof',ach:'prof',streak:'home'}[page];
@@ -161,18 +227,18 @@ P.home=()=>{
   return `<div class="top"><div class="logo"><b>⚡</b>TrainTrack</div><button class="bk" onclick="go('prof')">⚙</button></div>
   <div class="hero" style="position:relative">${ic('dumb').replace('class="i"','class="i hd"')}<h2><em>Лучше,</em><br>чем вчера</h2><p class="m">Твоя дисциплина сегодня — твой результат завтра.</p>
   <button class="b" onclick="addW('${t}')">＋ ${S.w[t]?'Изменить тренировку':'Отметить тренировку'}</button></div>
-  <button class="card row" style="width:100%;text-align:left;margin-top:14px" onclick="go('streak')"><div class="ic">🔥</div>
+  <button class="card row" style="width:100%;text-align:left;margin-top:14px" onclick="go('streak')"><div class="ic ${s.run?'fl':''}">🔥</div>
   <div><span class="m">Текущая серия</span><span class="big" style="display:block">${s.cur?days(s.cur):s.prog?s.prog+' из 3':'Не начата'}</span>
   <span class="m">${s.cur?'До рекорда: '+days(Math.max(s.best-s.cur,0)):'Серия активируется после 3 тренировочных дней подряд'}</span></div>
   ${s.cur?'<span class="tag">Отлично!</span>':''}</button>
-  <div class="card row"><div class="ic">⏱</div><div><span class="m">Сегодня</span><b class="big">${mins} мин</b></div><span class="m">${to()}</span></div>
-  <div class="card" style="border-color:var(--g)"><span class="m">Путь в Америку 🇺🇸</span><p style="font-size:16px;font-weight:600;margin:8px 0 10px;line-height:1.4">«${quote(new Date(),qi)}»</p><button class="m" style="color:var(--g)" onclick="qi++;render()">Другая цитата ›</button></div>
+  <div class="card row"><div class="ic">⏱</div><div><span class="m">Сегодня</span><b class="big" data-c="${mins}" data-s=" мин">${mins} мин</b></div><span class="m">${to()}</span></div>
+  <div class="card" style="border-color:var(--g)"><span class="m">Путь в Америку 🇺🇸</span><p class="qt" style="font-size:16px;font-weight:600;margin:8px 0 10px;line-height:1.4">«${quote(new Date(),qi)}»</p><button class="m" style="color:var(--g)" onclick="qi++;render()">Другая цитата ›</button></div>
   ${off?`<div class="card row"><div class="ic">☕</div><div><b>Сегодня отгул</b><span class="m">Серия сохраняется</span></div></div>`:''}`;
 };
 
 P.streak=()=>{
   const s=streak();
-  return back('Серия тренировок','home')+`<div style="text-align:center"><div class="ic" style="margin:0 auto;width:64px;height:64px;font-size:32px;border-radius:50%;border:2px solid var(--g)">🔥</div>
+  return back('Серия тренировок','home')+`<div style="text-align:center"><div class="ic fl" style="margin:0 auto;width:64px;height:64px;font-size:32px;border-radius:50%;border:2px solid var(--g)">🔥</div>
   <div class="big" style="font-size:34px;margin-top:8px">${s.cur?days(s.cur):s.prog+' из 3'}</div><div class="m">${s.cur?'Текущая серия':'Тренировок до старта серии'}</div></div>
   <div class="pr">${[1,2,3].map(i=>`<i class="${s.prog>=i?'on':''}"></i>`).join('')}</div>
   <p class="m" style="text-align:center">${s.best?'До рекорда: '+days(Math.max(s.best-s.cur,0)):'Рекорда пока нет'}</p>
@@ -204,7 +270,7 @@ P.stats=()=>{
   const wk=ks.filter(k=>S.w[k]),mins=wk.reduce((a,k)=>a+S.w[k],0),offs=(st=='a'?Object.keys(S.o):ks.filter(k=>S.o[k])).length,mx=Math.max(1,...bars.map(b=>b[1])),s=streak();
   const all=Object.keys(S.w),avg=all.length?Math.round(total()/all.length):0;
   return `<div class="top"><h1>Статистика</h1></div><div class="seg">${[['w','Неделя'],['m','Месяц'],['a','Все время']].map(x=>`<button class="${st==x[0]?'on':''}" onclick="st='${x[0]}';render()">${x[1]}</button>`).join('')}</div>
-  <div class="card"><div class="kp"><div><span class="m">Всего тренировок</span><div class="big">${wk.length}</div></div><div><span class="m">Общее время</span><div class="big">${mins} мин</div></div></div>
+  <div class="card"><div class="kp"><div><span class="m">Всего тренировок</span><div class="big" data-c="${wk.length}">${wk.length}</div></div><div><span class="m">Общее время</span><div class="big" data-c="${mins}" data-s=" мин">${mins} мин</div></div></div>
   <div class="bars">${bars.map(b=>`<div class="${b[1]?'':'z'}"><span style="height:${Math.round(b[1]/mx*100)}%" title="${b[1]} мин"></span>${b[0]}</div>`).join('')}</div></div>
   <div class="card list"><div class="row"><div class="ic">🔥</div><div><span class="m">Серия</span><b>${s.cur?days(s.cur):'Не начата'}</b></div></div>
   <div class="row"><div class="ic">⏱</div><div><span class="m">Средняя длительность</span><b>${avg} мин</b></div></div>
@@ -222,15 +288,15 @@ P.prof=()=>`<div class="top"><h1>Профиль</h1></div>
 
 P.goals=()=>back('Цели','prof')+`<p class="m" style="margin-bottom:12px">Выберите цель</p>`+Object.keys(GL).map(k=>`<button class="opt ${S.goal==k?'sel':''}" onclick="S.goal='${k}';save();render()"><div class="ic">${GL[k][2]}</div><div><b>${GL[k][0]}</b><span class="m">${GL[k][1]}</span></div><i class="rad"></i></button>`).join('')+`<button class="b" onclick="toast('Цель сохранена');go('prof')">Сохранить</button>`;
 const NL={t:'Напоминания о тренировках',o:'Напоминания об отгулах',m:'Мотивационные сообщения',r:'Еженедельный отчёт'};
-P.notif=()=>back('Уведомления','prof')+`<div class="card list">${Object.keys(NL).map(k=>`<button class="row" onclick="S.n['${k}']=!S.n['${k}'];save();render();sched(true)"><div><b>${NL[k]}</b></div><i class="tg ${S.n[k]?'on':''}"></i></button>`).join('')}</div>
+P.notif=()=>back('Уведомления','prof')+`<div class="card list">${Object.keys(NL).map(k=>`<button class="row" onclick="S.n['${k}']=!S.n['${k}'];save();this.querySelector('.tg').classList.toggle('on');sched(true)"><div><b>${NL[k]}</b></div><i class="tg ${S.n[k]?'on':''}"></i></button>`).join('')}</div>
   <div class="card"><div class="row"><div><b>Цитата про Америку</b><span class="m">Приходит каждый день</span></div><input type="time" value="${S.mt}" style="width:116px" onchange="S.mt=this.value||'09:00';save();sched(true)"></div>
   <div class="row" style="margin-top:12px"><div><b>Напоминание о тренировке</b><span class="m">Каждый день</span></div><input type="time" value="${S.rt}" style="width:116px" onchange="S.rt=this.value||'19:00';save();sched(true)"></div></div>
   <button class="b ol" onclick="testN()">Отправить тестовое уведомление</button><p class="m" style="margin-top:12px">Если уведомления не приходят, разрешите их в настройках телефона и отключите экономию батареи для TrainTrack.</p>`;
 P.theme=()=>back('Тема','prof')+[['light','☀️','Светлая'],['dark','🌙','Тёмная']].map(x=>`<button class="opt ${S.theme==x[0]?'sel':''}" onclick="S.theme='${x[0]}';save();render()"><div class="ic">${x[1]}</div><div><b>${x[2]}</b></div><i class="rad"></i></button>`).join('');
 P.help=()=>back('Помощь','prof')+[['Как начать серию?','Отметьте тренировки 3 дня подряд — серия активируется.'],['Как назначить отгул?','Откройте Календарь, нажмите на нужную дату и выберите «Запланировать отгул». Для каждой даты — отдельно.'],['Что делает отгул?','Сохраняет текущую серию, но не увеличивает её.'],['Когда серия прервётся?','Если прошедший день остался без тренировки и без отгула.'],['Где хранятся данные?','Только на этом устройстве. При удалении приложения они пропадают, поэтому сделайте резервную копию в Профиле и после переустановки восстановите её.']].map(x=>`<div class="card"><b>${x[0]}</b><p class="m" style="margin-top:4px">${x[1]}</p></div>`).join('');
 P.about=()=>back('О приложении','prof')+`<div class="card" style="text-align:center"><div class="logo" style="justify-content:center"><b>⚡</b>TrainTrack</div><p class="m" style="margin-top:8px">Версия 1.0.0<br>Трекер тренировок и серий. Все данные хранятся на вашем устройстве.</p></div>`;
-function achs(){const s=streak(),min=total();return[['🌟','Первые 3 дня','Серия 3 дня',s.best>=3],['⭐','Неделя силы','Серия 7 дней',s.best>=7],['⏱','10 часов','600 минут',min>=600],['🛡','Железная дисциплина','Серия 14 дней',s.best>=14]]}
-P.ach=()=>back('Достижения','prof')+`<div class="card list">${achs().map(a=>`<div class="row ${a[3]?'':'lock'}"><div class="ic">${a[0]}</div><div><b>${a[1]}</b><span class="m">${a[2]}</span></div><span>${a[3]?'✓':'🔒'}</span></div>`).join('')}</div>`;
+function achs(){const s=streak(),min=total(),n=Object.keys(S.w).length;return[['🏅','Первый шаг','Первая тренировка',n>=1],['🌟','Первые 3 дня','Серия 3 дня',s.best>=3],['🏋','10 тренировок','10 тренировок всего',n>=10],['🔥','Месяц огня','Серия 30 дней',s.best>=30],['⭐','Неделя силы','Серия 7 дней',s.best>=7],['⏱','10 часов','600 минут',min>=600],['🛡','Железная дисциплина','Серия 14 дней',s.best>=14]]}
+P.ach=()=>back('Достижения','prof')+`<div class="card list">${achs().map(a=>`<div class="row ${a[3]?'un':'lock'}"><div class="ic">${a[0]}</div><div><b>${a[1]}</b><span class="m">${a[2]}</span></div><span>${a[3]?'✓':'🔒'}</span></div>`).join('')}</div><button class="b ol" onclick="celeb([streakItem(3),streakItem(10),{icon:'medal',title:'Достижение получено!',sub:'Так выглядит награда',big:true}])">Показать анимации</button>`;
 
 /* ---- окна ---- */
 function sheet(h){$('#sh').innerHTML='<div class="bd" onclick="closeSh()"></div><div class="sheet">'+sv(h)+'</div>';$('#sh').classList.add('on')}
@@ -260,10 +326,10 @@ function addW(k){
 function setDur(n){dur=n;$('#cd').value='';document.querySelectorAll('#ch button').forEach(b=>b.classList.toggle('on',b.textContent==n+' мин'))}
 function saveW(k){
   if(!(dur>=1&&dur<=600)){toast('Укажите от 1 до 600 минут');return}
-  S.w[k]=Math.round(dur);delete S.o[k];save();closeSh();render();toast('Тренировка сохранена');
+  S.w[k]=Math.round(dur);delete S.o[k];const it=checkCel();closeSh();render();if(it.length)setTimeout(()=>celeb(it),400);else{okPop();toast('Тренировка сохранена')}
 }
 function delW(k){delete S.w[k];save();closeSh();render();toast('Тренировка удалена')}
-function setOff(k){if(S.w[k]){toast('В этот день уже есть тренировка');return}S.o[k]=true;save();closeSh();render();toast('Отгул назначен на '+fmt(k))}
+function setOff(k){if(S.w[k]){toast('В этот день уже есть тренировка');return}S.o[k]=true;save();closeSh();render();okPop();toast('Отгул назначен на '+fmt(k))}
 function askCancel(k){sheet(`<h3>Отменить отгул?</h3><p class="m">Отгул на ${fmt(k)} будет удалён. Если день останется без тренировки, серия прервётся.</p><button class="b" onclick="cancelOff('${k}')">Отменить отгул</button><button class="b ol" onclick="closeSh()">Назад</button>`)}
 function cancelOff(k){delete S.o[k];save();closeSh();render();toast('Отгул отменён')}
 function moveOff(k){sheet(`<h3>Изменить дату отгула</h3><p class="m">Сейчас: ${fmt(k)}</p><input type="date" id="md" min="${TK()}" value="${k}" style="margin-top:10px"><button class="b" onclick="doMove('${k}')">Перенести</button><button class="b ol" onclick="closeSh()">Отмена</button>`)}
@@ -277,7 +343,7 @@ function restore(){sheet(`<h3>Восстановить данные</h3><p class
 function doRestore(){const v=$('#rs').value.trim();try{if(v.slice(0,4)!='TT1:')throw 0;const d=JSON.parse(decodeURIComponent(escape(atob(v.slice(4)))));if(!d||typeof d.w!='object'||typeof d.o!='object')throw 0;S=Object.assign({},DEF,d,{n:Object.assign({},DEF.n,d.n)});save();closeSh();render();toast('Данные восстановлены')}catch(e){toast('Неверный код копии')}}
 function editName(){sheet(`<h3>Ваше имя</h3><input type="text" id="nm" maxlength="24" value="${esc(S.name)}"><button class="b" onclick="S.name=$('#nm').value.trim()||'Атлет';save();closeSh();render()">Сохранить</button><button class="b ol" onclick="closeSh()">Отмена</button>`)}
 function askReset(){sheet(`<h3>Удалить все данные?</h3><p class="m">Тренировки, отгулы и настройки будут удалены без возможности восстановления.</p><button class="b dg" onclick="localStorage.removeItem(K);S=load();closeSh();go('home');toast('Данные удалены')">Удалить</button><button class="b ol" onclick="closeSh()">Отмена</button>`)}
-render();sched(false);
+render();anim();sched(false);
 </script>
 </body>
 </html>
